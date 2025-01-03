@@ -1,7 +1,9 @@
 mod tokenizer;
+mod parser;
 
 use std::collections::{HashMap};
 
+#[derive(Debug)]
 enum JsonValue {
     Null,
     Bool(bool),
@@ -27,10 +29,21 @@ pub enum Token {
 
 
 fn main() {
-    let json = "\"hoi\"truefalsenull1111";
+    let json =
+        "{\n\t\"test\":\"hoi\",\n\t\"testObject\":{\n\t\t\"value\":\"hallo\",\n\t},\n\t\"array\":[true,1,null,false],\n}";
+
+    println!("Parsing:\n{}", json);
 
     match tokenizer::tokenize(json) {
-        Ok(t) => println!("{:?}", t),
+        Ok(t) => {
+            println!("\ntokens:\n{:?}", t);
+            let object = parser::parse(t);
+            match object {
+                Ok(v) => println!("\njson object:\n{:?}", v),
+                Err(e) => println!("{}", e)
+            }
+
+        },
         Err(e) => println!("{}", e)
     }
 }

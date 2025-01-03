@@ -18,9 +18,7 @@ pub fn tokenize(json: &str) -> Result<Vec<Token>, String> {
             't' | 'f' =>  tokens.push(parse_bool(&mut chars, c)?),
             '"' => tokens.push(parse_string(&mut chars)),
             c if c.is_numeric() => tokens.push(parse_number(&mut chars, c)?),
-
-
-            c if c.is_ascii_whitespace() => {}
+            c if c.is_ascii_whitespace() => {},
             _ => return Err(format!("Unknown character: {}", c))
         }
     }
@@ -72,7 +70,7 @@ fn parse_number(chars: &mut Peekable<Chars>, c: char) -> Result<Token, String> {
 
     let result = match number.parse::<f64>() {
         Ok(value) => value,
-        Err(e) => return Err(format!("Failed to convert '{}' to f64", {number}))
+        Err(_) => return Err(format!("Failed to convert '{}' to f64", {number}))
     };
 
     Ok(Number(result))
