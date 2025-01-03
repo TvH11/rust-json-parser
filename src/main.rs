@@ -2,6 +2,8 @@ mod tokenizer;
 mod parser;
 
 use std::collections::{HashMap};
+use std::{env, fs, io};
+use std::process::exit;
 
 #[derive(Debug)]
 enum JsonValue {
@@ -28,9 +30,21 @@ pub enum Token {
 }
 
 
-fn main() {
-    let json =
-        "{\n\t\"test\":\"hoi\",\n\t\"testObject\":{\n\t\t\"value\":\"hallo\",\n\t},\n\t\"array\":[true,1,null,false],\n}";
+fn main() -> io::Result<()> {
+    let args: Vec<String> = env::args().collect();
+    if args.len() != 2 {
+        eprintln!("Usage: {} <file_path>", args[0]);
+        exit(1);
+    }
+
+    let file_path = &args[1];
+
+    let content = fs::read_to_string(file_path)?;
+    //
+    // let json =
+    //     "{\n\t\"test\":\"hoi\",\n\t\"testObject\":{\n\t\t\"value\":\"hallo\",\n\t},\n\t\"array\":[true,1,null,false],\n}";
+
+    let json = &content;
 
     println!("Parsing:\n{}", json);
 
@@ -46,6 +60,7 @@ fn main() {
         },
         Err(e) => println!("{}", e)
     }
+    Ok(())
 }
 
 

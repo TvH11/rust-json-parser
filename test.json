@@ -1,0 +1,16 @@
+{
+    "name": "John Doe",
+    "age": 30,
+    "isEmployed": true,
+    "skills": [
+      "JavaScript",
+      "Python",
+      "Java"
+    ],
+    "address": {
+      "street": "123 Main St",
+      "city": "Anytown",
+      "state": "CA",
+      "zip": "12345"
+    }
+  }
